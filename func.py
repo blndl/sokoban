@@ -3,6 +3,10 @@ class coords:
         self.x = x
         self.y = y
 
+def printMap (level):
+    for xs in level:
+        print(" ".join(map(str, xs)))
+
 def findPlayer(level):
     xy = coords(0,0)
     for buf in level:
@@ -55,14 +59,11 @@ def moveDown(level):
         level[xy.x][xy.y] -= 2
         level[xy.x + 1][xy.y] += 2
         print("Moved down.\n")
-    if level[xy.x + 1][xy.y] == 3 or level[xy.x + 1][xy.y] == 7:
+    elif level[xy.x + 1][xy.y] == 3 or level[xy.x + 1][xy.y] == 7:
         handlePush(level, 4)
     else:
         print("Failed to move\n")
     
-def printMap (level):
-    for xs in level:
-        print(" ".join(map(str, xs)))
 
 def handlePush(level, path):
     if path == 1:
@@ -80,8 +81,6 @@ def pushLeft(level):
         level[xy.x][xy.y - 1] -= 3
         level[xy.x][xy.y - 2] += 3
         moveLeft(level)
-    else:
-        print("Failed to move.\n")
 
 def pushRight(level):
     xy = findPlayer(level)
@@ -89,8 +88,7 @@ def pushRight(level):
         level[xy.x][xy.y + 1] -= 3
         level[xy.x][xy.y + 2] += 3
         moveRight(level)
-    else:
-        print("Failed to move.\n")
+
 
 def pushUp(level):
     xy = findPlayer(level)
@@ -98,8 +96,6 @@ def pushUp(level):
         level[xy.x - 1][xy.y] -= 3
         level[xy.x - 2][xy.y] += 3
         moveUp(level)
-    else:
-        print("Failed to move.\n")
 
 def pushDown(level):
     xy = findPlayer(level)
@@ -107,8 +103,23 @@ def pushDown(level):
         level[xy.x + 1][xy.y] -= 3
         level[xy.x + 2][xy.y] += 3
         moveDown(level)
+
+def winCheck(level):
+    blockCheck = 0
+    goalCheck = 0
+    fullCheck = 0
+    for line in level:
+        if 3 in line:
+            blockCheck += 1
+        if 4 in line or 6 in line:
+            goalCheck += 1
+        if 7 in line:
+            fullCheck += 1
+            print(blockCheck, goalCheck, fullCheck)
+    if blockCheck == 0 and goalCheck == 0 and fullCheck > 0:
+        return 1
     else:
-        print("Failed to move.\n")
+        return 0
 
 def gameLoop(level):
     game = 1
@@ -124,3 +135,7 @@ def gameLoop(level):
             moveUp(level)
         elif answer == "4":
             moveDown(level)
+        if winCheck(level) == 1:
+            game = 0
+            print("victory\n")
+        
