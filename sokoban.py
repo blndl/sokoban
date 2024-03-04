@@ -1,7 +1,7 @@
 from func import *
 
 level = []
-fd = open("/Users/blndl/Documents/python/sokoban/map.skb")
+fd = open("./map.skb")
 y = 0
 mapNbr = int(fd.read(1))
 fd.read(1)
