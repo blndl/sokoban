@@ -115,7 +115,7 @@ def winCheck(level):
             goalCheck += 1
         if 7 in line:
             fullCheck += 1
-            print(blockCheck, goalCheck, fullCheck)
+            #print(blockCheck, goalCheck, fullCheck)
     if blockCheck == 0 and goalCheck == 0 and fullCheck > 0:
         return 1
     else:
@@ -137,5 +137,34 @@ def gameLoop(level):
             moveDown(level)
         if winCheck(level) == 1:
             game = 0
+            printMap(level)
             print("victory\n")
-        
+            return (1)
+
+def adventureLoop(levels):
+#    adventure = 1
+    lvl = 0
+    for i in levels:
+        lvl += 1
+        print("level ", lvl,"\n")
+        answer = input("1.Start  2.Quit")
+        if answer == "1":
+            print("Good luck for level ", lvl, "!")
+            gameLoop(i)
+        elif answer == "2":
+            print("quitting adventure mode")
+            adventure = 0
+            break
+        else:
+            print("Invalid answer")
+
+    
+
+def mainMenu(levels):
+    inMenu = 1
+    while inMenu == 1:
+        answer = input("Welcome to Sokoban !\n1.Play 3 maps  2.Help  3.Quit\n")
+        if answer == "1":
+            adventureLoop(levels)
+        elif answer == "3":
+            inMenu = 0
